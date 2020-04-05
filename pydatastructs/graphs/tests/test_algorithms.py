@@ -1,6 +1,6 @@
 from pydatastructs import (breadth_first_search, Graph,
 breadth_first_search_parallel, minimum_spanning_tree,
-minimum_spanning_tree_parallel, strongly_connected_components)
+minimum_spanning_tree_parallel, strongly_connected_components, random_walk)
 
 
 def test_breadth_first_search():
@@ -185,3 +185,42 @@ def test_strongly_connected_components():
     scc = strongly_connected_components
     _test_strongly_connected_components(scc, "List", "kosaraju")
     _test_strongly_connected_components(scc, "Matrix", "kosaraju")
+
+def test_random_walk():
+
+    def _test_random_walk(ds):
+        import pydatastructs.utils.misc_util as utils
+        GraphNode = getattr(utils, "Adjacency" + ds + "GraphNode")
+
+        V1 = GraphNode(0)
+        V2 = GraphNode(1)
+        V3 = GraphNode(2)
+        V4 = GraphNode(3)
+        V5 = GraphNode(4)
+        V6 = GraphNode(5)
+        V7 = GraphNode(6)
+        V8 = GraphNode(7)
+        
+        G = Graph(V1, V2, V3, V4, V5, V6, V7, V8)
+
+        edges = [
+            (V1.name, V2.name),
+            (V1.name, V3.name),
+            (V1.name, V4.name),
+            (V2.name, V5.name),
+            (V2.name, V6.name),
+            (V3.name, V6.name),
+            (V3.name, V7.name),
+            (V4.name, V7.name),
+            (V4.name, V8.name)
+        ]
+
+        for edge in edges:
+            G1.add_edge(*edge)
+
+        random_walk = random_walk(G, V1, 3)
+
+        assert random_walk == [3]
+
+    _test_random_walk("List")
+    _test_random_walk("Matrix")

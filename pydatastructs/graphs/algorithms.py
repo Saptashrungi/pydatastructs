@@ -548,3 +548,32 @@ def strongly_connected_components(graph, algorithm):
         "isn't implemented for finding strongly connected components."
         %(algorithm, graph._impl))
     return getattr(algorithms, func)(graph)
+
+
+def random_walk(G, start, path_length, alpha = None):
+    import random
+    random.seed(44)
+    
+    if start:
+        path = [start]
+    else:
+        path = [random.choices(G.vertices)]
+  
+
+    for i in range(0, path_length):
+        cur = path[-1]
+        degree = len(G.neighbors(cur))
+        probablity_list = degree*[1/degree]
+
+        if random.random() < alpha and alpha is not None:    #alpha determines (directly proportional) randomness of random walk
+            next_node = start
+        else:
+            if cur.neighbors == []:
+            break
+            next_node = random.choices(cur.neighbors, probablity)
+
+        path.append(next_node)
+    
+    return path
+
+
